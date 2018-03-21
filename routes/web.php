@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get( '/' ,'IndexController@main' )->name('home');
+
+Route::get( '/blog/{uuid}','IndexController@detail' )->name('blog.detail');
+
+Route::get( '/category/{uuid}', 'IndexController@category' )->name('category.lists');

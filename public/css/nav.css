@@ -1,0 +1,130 @@
+.carousel {
+
+    margin-top: 4px;
+    margin-bottom: -18px;
+}
+
+.carousel .item {
+    min-height: 280px; /* Prevent carousel from being distorted if for some reason image doesn't load */
+}
+
+.carousel .item img {
+    margin: 0 auto; /* Align slide image horizontally center */
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    display: block;
+    line-height: 1;
+    width: 70%;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px #ccc;
+    -moz-box-shadow: 0 0 10px #ccc;
+    -webkit-box-shadow: 0 0 10px #ccc;
+}
+.topics-index .topic-filter a.active {
+    border-bottom: 2px solid #fbbd08;
+}
+
+.navbar-default {
+    border-top: 4px solid #35350b;
+    height: auto;
+}
+
+.share-link-site {
+    font-size: 12px;
+    color: #828282;
+}
+
+.topics-index .topic-list .infos .media-heading a:visited {
+    color: #a2a2a2;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+}
+
+.btn-shadow {
+    background-color: #fff !important;
+    border: none !important;
+    box-shadow: 0 0 5px #ccc;
+    color: #909090;
+}
+
+.translation-item .postion .index a {
+    margin: 0 5px;
+    margin-top: 13px;
+}
+
+.topic-content-big-font {
+    font-size: 16px;
+}
+
+.topic-content-big-font p {
+    line-height: 2.2;
+}
+
+ul.breadcrumb a {
+    color: inherit;
+}
+
+a {
+    color: #f4645f;
+}
+
+a:hover, a:focus {
+    color: #d6514d;
+    transition: color .15s ease 0s;
+}
+
+.btn-primary {
+    background-color: #f4645f;
+    border-color: #f93e38;
+}
+
+.btn-primary:hover {
+    background-color: #f54944;
+    border-color: #f11b14;
+}
+
+.translation-item .postion .btn-primary {
+    background-color: #f4645f !important;
+    border-color: #f93e38;
+}
+
+.vote-box .btn-primary.active {
+    background-color: #f4645f;
+    border-color: #f93e38;
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #f4645f;
+    border-color: #f93e38;
+}
+
+.messages .active .badge-important {
+    background-color: #ffffff !important;
+    color: red !important;
+}
+
+.user-basic-info .follow-info a.counter:hover {
+    color: #d6514d;
+}
+
+.user-basic-info .follow-info a.counter {
+    color: #f4645f;
+}
+
+.user-cards .follow-info a.counter:hover {
+    color: #d6514d;
+}
+
+.user-cards .follow-info a.counter {
+    color: #f4645f;
+}
+
