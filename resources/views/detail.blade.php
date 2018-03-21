@@ -3,8 +3,6 @@
 @include('common.head')
 
 <link rel="stylesheet" href="/css/detail.css">
-
-
 <body id="body" class="home">
 <div id="warp">
     {{-- 导航 --}}
@@ -32,7 +30,7 @@
                 </div>
 
                 <div class="jscroll">
-                    <div class="panel-body remove-padding-horizontal">
+                    <div id="" class="panel-body remove-padding-horizontal">
                         {{-- 封面图 --}}
                         <div class="text-center"><img src="{{-- 封面图 --}}" alt="" /></div>
                         {{-- 文章详情 --}}
@@ -60,6 +58,9 @@
 
         <div class="clearfix"></div>
     </div>
+    <footer>
+        @include('common.footer')
+    </footer>
 </div>
 </body>
 </html>

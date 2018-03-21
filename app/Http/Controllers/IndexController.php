@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class IndexController extends Controller
 {
     use CategoryController;
+    protected $allowFields = ['b.uuid','b.title','b.short','b.cover','b.oppose','b.agree','b.publishedtime','b.publishedtype','b.clicks'
+
+    ];
     //
     public function main (Request $request)
     {
@@ -21,9 +24,7 @@ class IndexController extends Controller
         $current        =   'A04D0131A0467228B4BF7903194A4268';
         $nav2           =   $this->SubCategory($current);
         // -- 列表信息
-        $lists          =   Blog::where('status',1)
-            ->select(...['uuid','title','short','cover','oppose','agree','publishedtime','publishedtype','clicks'])
-            ->orderBy( 'publishedtime', 'desc' )->get();
+        $lists          =   $this->_blogQueryBuilder()->paginate(30);
         // -- 广告信息
 
         // -- 底部支持信息
@@ -32,7 +33,7 @@ class IndexController extends Controller
             'navs'      =>  $navs,
             'nav2'      =>  $nav2,
             'lists'     =>  $lists,
-            'current'   =>  $current
+            'current'   =>  $current,
         ] );
     }
 
@@ -51,5 +52,15 @@ class IndexController extends Controller
             'title'         =>  $info->title,
             'description'   =>  $info->short
         ]);
+    }
+
+
+    protected function _blogQueryBuilder($where=[],$fields=[])
+    {
+        $where = array_merge( [['b.status',1]],$where );
+        return Blog::from('blog as b')->select(...$this->allowFields)
+            ->leftjoin('blog_category_relation as r','b.uuid','=','r.buuid')
+//            ->leftjoin('manage.manage_admin as a','a.uuid','=','b.createdby')
+            ->where( $where );
     }
 }

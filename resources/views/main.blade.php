@@ -7,7 +7,6 @@
     <div id="warp">
         {{-- 导航 --}}
         @include('common.nav')
-
         {{-- 页面主体 --}}
         <div class="container main-container">
             {{-- left --}}
@@ -31,7 +30,7 @@
                                             <span class="count_seperator">/</span>
                                             <span class="count_of_visits" title="查看数">{{ $item->clicks }}</span>
                                             <span class="count_seperator">|</span>
-                                            <abbr title="{{ date('Y-m-d H:i:s',$item->publishedtime) }}" class="timeago">16分钟前</abbr>
+                                            <abbr title="{{ date('Y-m-d H:i:s',$item->publishedtime) }}" class="timeago">{{ date('Y-m-d',$item->publishedtime) }}</abbr>
                                         </div>
                                     </a>
                                     <div class="avatar pull-left">
@@ -41,7 +40,21 @@
                                     </div>
                                     <div class="infos">
                                         <div class="media-heading">
-                                            <span class="hidden-xs label label-warning">置顶</span>
+                                            @switch($item->publishedtype)
+                                                @case(2)
+                                                <span class="hidden-xs label label-warning">置顶</span>
+                                                @break
+
+                                                @case(1)
+                                                <span class="hidden-xs label label-success">推荐</span>
+                                                @break
+
+                                                @default
+                                                <span class="hidden-xs label label-default">正文</span>
+                                            @endswitch
+
+
+
                                             <a href="{{ route('blog.detail',[$item->uuid]) }}" title="{{ $item->title }}">{{ $item->title }}</a>
                                         </div>
                                     </div>
@@ -52,17 +65,7 @@
 
                         <div class="panel-footer text-right remove-padding-horizontal pager-footer">
                             <!-- Pager -->
-                            <ul class="pagination">
-
-                                <li class="disabled"><span>&laquo;</span></li>
-
-                                <li class="active"><span>1</span></li>
-                                <li><a href="https://laravel-china.org?page=2">2</a></li>
-                                <li><a href="https://laravel-china.org?page=3">3</a></li>
-                                <li class="disabled"><span>...</span></li>
-
-                                <li><a href="https://laravel-china.org?page=2" rel="next">&raquo;</a></li>
-                            </ul>
+                            {{ $lists->links() }}
 
                         </div>
                     </div>
