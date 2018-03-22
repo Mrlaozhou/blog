@@ -85,6 +85,7 @@ class IndexController extends Controller
         $where          =   array_filter(array_merge( $where['where'] ?? [[]], [ ['b.status',1] ] ));
         $builder =  Blog::from('blog as b')->select(...$this->allowFields)
             ->leftjoin('blog_category_relation as r','b.uuid','=','r.buuid');
+//            ->leftjoin('a','a.uuid','=','b.createdby');
         $where && $builder->where( $where );
         $whereIn && $builder->whereIn( ...$whereIn );
         return $builder;
