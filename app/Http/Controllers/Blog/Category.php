@@ -24,7 +24,7 @@ trait Category
         }
         $subIds         =   array_merge( [$uuid],$subIds );
         // -- 列表信息
-        $lists          =   $this->_blogQueryBuilder([ ['r.cuuid','in',$subIds] ])
+        $lists          =   $this->_blogQueryBuilder([ 'in'=>[ 'r.cuuid',$subIds ] ])
             ->orderBy( 'b.publishedtype', 'desc' )->paginate(30);
         // -- 广告信息
 

@@ -21,10 +21,9 @@
                     <h1 class="panel-title topic-title">{{ $info->title }}</h1>
                     <div class="meta inline-block" >
                         <a href="" class="remove-padding-left"><i class="fa fa-folder text-md" aria-hidden="true"></i> 公告</a>⋅
-                        <a class="author" href="">Summer</a>⋅
-                        于 <abbr title="2018-01-24 15:42:41" class="timeago">1个月前</abbr>⋅
-                        最后回复由<a href="">{{--最后评论者--}}</a>
-                        于 <abbr title="2018-03-20 18:07:56" class="timeago">22小时前</abbr>⋅17941 阅读
+                        <a class="author" href="{{ route('user.info',[$user->uuid]) }}">{{ $user->username }}</a>⋅
+                        于 <abbr title="" class="timeago">{{ date('Y-m-d',$info->publishedtime) }}</abbr>发布⋅
+                        {{ $info->clicks }} 阅读
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -39,14 +38,6 @@
 
                     <div class="panel-footer text-right remove-padding-horizontal pager-footer">
                         <!-- Pager -->
-                        <ul class="pagination">
-                            <li class="disabled"><span>&laquo;</span></li>
-                            <li class="active"><span>1</span></li>
-                            <li><a href="https://laravel-china.org?page=2">2</a></li>
-                            <li><a href="https://laravel-china.org?page=3">3</a></li>
-                            <li class="disabled"><span>...</span></li>
-                            <li><a href="https://laravel-china.org?page=2" rel="next">&raquo;</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>

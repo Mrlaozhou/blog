@@ -34,8 +34,8 @@
                                         </div>
                                     </a>
                                     <div class="avatar pull-left">
-                                        <a href="" title="http://www.52laozhou.com">
-                                            <img class="media-object img-thumbnail avatar avatar-middle" alt="http://www.52laozhou.com" src="/images/timg.jpg"/>
+                                        <a href="{{ route('user.info',[$item->createdby]) }}" title="发布者">
+                                            <img class="media-object img-thumbnail avatar avatar-middle" alt="" src="/images/timg.jpg"/>
                                         </a>
                                     </div>
                                     <div class="infos">

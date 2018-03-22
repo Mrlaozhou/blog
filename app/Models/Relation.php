@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Base;
 
-class Relation extends Base
+class Relation extends MainBase
 {
     //
     protected $table        =   'blog_category_relation';

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Base extends Model
+class MainBase extends Model
 {
     //
     protected $primaryKey           =   'uuid';
@@ -16,4 +16,9 @@ class Base extends Model
     public $incrementing            =   false;
 
     public $timestamps              =   false;
+
+    public function admin ()
+    {
+        return $this->hasOne('App\Models\Admin','uuid','createdby');
+    }
 }

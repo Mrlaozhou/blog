@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Base;
-class Category extends Base
+
+class Category extends MainBase
 {
     //
     protected $table        =   'blog_category';
