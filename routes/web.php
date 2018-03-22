@@ -19,3 +19,5 @@ Route::get( '/blog/{uuid}','IndexController@detail' )->name('blog.detail');
 Route::get( '/category/{uuid}', 'IndexController@category' )->name('category.lists');
 
 Route::get( '/user/{uuid}', 'UserController@index' )->name('user.info');
+
+Route::get( '/test', 'TestController@index' );
