@@ -2,24 +2,25 @@
 
 namespace App\Providers;
 
+use App\Models\Blog;
 use App\Observers\BlogObserver;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class BlogServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-        //
-
+        // 注册blog观察
+        Blog::observe( BlogObserver::class );
     }
 
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */

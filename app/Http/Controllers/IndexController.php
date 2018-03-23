@@ -90,18 +90,4 @@ class IndexController extends Controller
         $whereIn && $builder->whereIn( ...$whereIn );
         return $builder;
     }
-
-    protected function __blogQueryBuilder($where=[],$fields=[])
-    {
-        // 条件
-        $where          =   implode( 'AND', array_merge( ['b.status=1'],$where ?: [] ) );
-        // 字段
-        $fields         =   implode( ',', $fields ?: $this->allowFields2 );
-        return DB::select("
-            SELECT {$fields} FROM `main`.`main_blog` as b
-              LEFT JOIN `main`.`main_blog_category_relation` as r ON b.uuid = r.buuid
-              LEFT JOIN `manage`.`manage_admin` as a ON b.createdby = a.uuid
-              WHERE {$where}
-        ");
-    }
 }

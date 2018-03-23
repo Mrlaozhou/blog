@@ -57,6 +57,24 @@ if( !function_exists('Sorts') )
     }
 }
 
+if( !function_exists('Ancestor') )
+{
+    function Ancestor ($object,$pid)
+    {
+        $ancestor   =   '';
+        foreach ( $object as $key =>$item ){
+            if( $item->uuid != $pid )   continue;
+
+            if( $item->pid == '' ){
+                return $ancestor=$item;
+            };
+            $ancestor = Ancestor($object,$item->pid);
+        }
+
+        return $ancestor;
+    }
+}
+
 if( !function_exists('dump_sql') )
 {
     /**

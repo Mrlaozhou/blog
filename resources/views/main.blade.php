@@ -35,7 +35,8 @@
                                     </a>
                                     <div class="avatar pull-left">
                                         <a href="{{ route('user.info',[$item->createdby]) }}" title="发布者">
-                                            <img class="media-object img-thumbnail avatar avatar-middle" alt="" src="/images/timg.jpg"/>
+                                            <img class="media-object img-thumbnail avatar avatar-middle" alt=""
+                                                 src="{{ $item->cover != '' ? $item->cover : '/images/timg.jpg' }}"/>
                                         </a>
                                     </div>
                                     <div class="infos">

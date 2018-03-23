@@ -17,7 +17,11 @@ trait Category
         $navs           =   $this->categoryClassA();
         // -- 二级默认分类信息
         $current        =   $uuid;
-        $nav2           =   $this->SubCategory($current);
+        $currentInfo    =   Model::find($uuid);
+        $truecurrent    =   ($ancestor = Ancestor($this->validCategory(),$currentInfo->pid))
+            ?   $ancestor->uuid
+            :   $current;
+        $nav2           =   $this->SubCategory( $truecurrent );
         $subIds         =   [];
         foreach ($nav2 as $item) {
             $subIds[] = $item->uuid;
@@ -34,8 +38,8 @@ trait Category
             'navs'      =>  $navs,
             'nav2'      =>  $nav2,
             'lists'     =>  $lists,
-            'current'   =>  $current,
-            'paginate'  =>  ''
+            'current'   =>  $ancestor ? $ancestor->uuid : $current,
+            'current2'  =>  $current
         ] );
     }
 
@@ -55,6 +59,11 @@ trait Category
     protected function SubCategory ($uuid)
     {
         return Sorts( $this->validCategory(), true, $uuid );
+    }
+
+    protected function getTopClass($uuid)
+    {
+
     }
 
     /**
