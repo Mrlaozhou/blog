@@ -45,6 +45,7 @@ class IndexController extends Controller
             'nav2'      =>  $nav2,
             'lists'     =>  $lists,
             'current'   =>  $current,
+            'current2'  =>  ''
         ] );
     }
 
