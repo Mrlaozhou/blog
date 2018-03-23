@@ -1,4 +1,14 @@
+<style>
+    .navbar-default .navbar-brand img {
+        width: 128px;
+        height: 40px;
+    }
 
+    .navbar-default .navbar-brand {
+        color: #fff;
+        padding-top: 5px;
+    }
+</style>
 
 
 {{-- 导航 --}}
