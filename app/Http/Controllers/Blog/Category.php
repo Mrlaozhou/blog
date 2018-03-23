@@ -10,8 +10,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait Category
 {
-    public $category;
-
     public function category (Request $request, $uuid)
     {
         // TODO 获取一级导航栏信息、二级导航信息、当前分类（及子分类）下列表信息、广告位信息、底部支持信息
@@ -24,14 +22,11 @@ trait Category
         // -- 二级导航信息
         $nav2           =   $this->SubCategory( $ancestor->uuid ?? $uuid );
         // -- 当前分类（及子分类）ids集
-        $currentSubItems=   Sorts( $this->validCategory(), true, $uuid );
+        $currentSubItems=   $this->SubCategory( $uuid );
         $subIds         =   array_merge( [$uuid],array_map( function($item){ return $item->uuid; },$currentSubItems ) );
         // -- 列表信息
         $lists          =   $this->_blogQueryBuilder([ 'in'=>[ 'r.cuuid',$subIds ] ])
             ->orderBy( 'b.publishedtype', 'desc' )->paginate(30);
-        // -- 广告信息
-
-        // -- 底部支持信息
 
         return view( 'main', [
             'navs'      =>  $navs,
@@ -70,8 +65,6 @@ trait Category
      */
     protected function validCategory ()
     {
-        if( $this->category )   return $this->category;
-
-        return $this->category = Model::where('status',1)->select(...['uuid','name','pid'])->get();
+        return Model::where('status',1)->select(...['uuid','name','pid'])->get();
     }
 }

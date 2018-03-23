@@ -36,7 +36,7 @@ if( !function_exists('Sorts') )
     function Sorts( $object, $isClear=false, $pid="", $level=1 )
     {
         static $sorts = [];
-        if ($isClear)   $sorts=[];
+        if ($isClear) $sorts=[];
         foreach ( $object as $key => $item )
         {
             if( is_object( $item ) ){
