@@ -6,27 +6,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category as Model;
 use App\Models\Blog;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 trait Category
 {
     public $category;
 
     public function category (Request $request, $uuid)
     {
-        // TODO 获取导航栏信息、分类下列表信息、广告位信息、底部支持信息
+        // TODO 获取一级导航栏信息、二级导航信息、当前分类（及子分类）下列表信息、广告位信息、底部支持信息
+        // -- 当前分类信息
+        if( !$currentInfo=Model::find($uuid) )   throw new NotFoundHttpException('页面走丢');
         // -- 一级分类信息
         $navs           =   $this->categoryClassA();
-        // -- 二级默认分类信息
-        $current        =   $uuid;
-        $currentInfo    =   Model::find($uuid);
-        $truecurrent    =   ($ancestor = Ancestor($this->validCategory(),$currentInfo->pid))
-            ?   $ancestor->uuid
-            :   $current;
-        $nav2           =   $this->SubCategory( $truecurrent );
-        $subIds         =   [];
-        foreach ($nav2 as $item) {
-            $subIds[] = $item->uuid;
-        }
-        $subIds         =   array_merge( [$uuid],$subIds );
+        // -- 当前分类最高父级信息
+        $ancestor       =   Ancestor( $this->validCategory(),$currentInfo->pid );
+        // -- 二级导航信息
+        $nav2           =   $this->SubCategory( $ancestor->uuid ?? $uuid );
+        // -- 当前分类（及子分类）ids集
+        $currentSubItems=   Sorts( $this->validCategory(), true, $uuid );
+        $subIds         =   array_merge( [$uuid],array_map( function($item){ return $item->uuid; },$currentSubItems ) );
         // -- 列表信息
         $lists          =   $this->_blogQueryBuilder([ 'in'=>[ 'r.cuuid',$subIds ] ])
             ->orderBy( 'b.publishedtype', 'desc' )->paginate(30);
@@ -38,11 +37,15 @@ trait Category
             'navs'      =>  $navs,
             'nav2'      =>  $nav2,
             'lists'     =>  $lists,
-            'current'   =>  $ancestor ? $ancestor->uuid : $current,
-            'current2'  =>  $current
+            'current'   =>  $ancestor->uuid ?? $uuid,
+            'current2'  =>  $uuid,
         ] );
     }
 
+    /**
+     * @ 一级导航
+     * @return array
+     */
     protected function categoryClassA ()
     {
         $calssA = [];
@@ -59,11 +62,6 @@ trait Category
     protected function SubCategory ($uuid)
     {
         return Sorts( $this->validCategory(), true, $uuid );
-    }
-
-    protected function getTopClass($uuid)
-    {
-
     }
 
     /**

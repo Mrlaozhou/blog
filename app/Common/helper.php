@@ -44,13 +44,13 @@ if( !function_exists('Sorts') )
                 $item->level    =   $level;
                 $sorts[]        =   $item;
                 unset($object[$key]);
-                Sorts( $object, $isClear=false, $item->uuid,$level+1 );
+                Sorts( $object, false, $item->uuid,$level+1 );
             }else{
                 if ( $item['pid'] != $pid )   continue;
                 $item['level']    =   $level;
                 $sorts[]        =   $item;
                 unset($object[$key]);
-                Sorts( $object, $isClear=false, $item['uuid'],$level+1 );
+                Sorts( $object, false, $item['uuid'],$level+1 );
             }
         }
         return $sorts;
