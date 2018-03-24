@@ -14,13 +14,23 @@ class Blog extends MainBase
         'retrieved'         =>  BlogObserver::class
     ];
 
-    public function admin ()
+    public function auther ()
     {
-        return $this->hasOne('App\Models\Admin','uuid','createdby');
+        return $this->hasOne(User::class,'uuid','createdby')
+            ->select(...['uuid','nickname']);
     }
 
-    public function scopeStatus ($query)
+    /**
+     * @ 当前文章所属分类
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories ()
     {
-        return $query->where('status',1);
+        return $this->belongsToMany(
+            Category::class,
+            'blog_category_relation',
+            'buuid',
+            'cuuid'
+        )->select(...['uuid','name']);
     }
 }

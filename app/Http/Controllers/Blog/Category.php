@@ -10,43 +10,51 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait Category
 {
+    protected $categories;
+
+    /**@ 分类下文章列表
+     * @param Request $request
+     * @param $uuid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function category (Request $request, $uuid)
     {
-        // TODO 获取一级导航栏信息、二级导航信息、当前分类（及子分类）下列表信息、广告位信息、底部支持信息
-        // -- 当前分类信息
-        if( !$currentInfo=Model::find($uuid) )   throw new NotFoundHttpException('页面走丢');
-        // -- 一级分类信息
-        $navs           =   $this->categoryClassA();
-        // -- 当前分类最高父级信息
-        $ancestor       =   Ancestor( $this->validCategory(),$currentInfo->pid );
-        // -- 二级导航信息
-        $nav2           =   $this->SubCategory( $ancestor->uuid ?? $uuid );
-        // -- 当前分类（及子分类）ids集
-        $currentSubItems=   $this->SubCategory( $uuid );
-        $subIds         =   array_merge( [$uuid],array_map( function($item){ return $item->uuid; },$currentSubItems ) );
-        // -- 列表信息
-        $lists          =   $this->_blogQueryBuilder([ 'in'=>[ 'r.cuuid',$subIds ] ])
-            ->orderBy( 'b.publishedtype', 'desc' )->paginate(30);
+        // TODO 顶级分类信息、当前分类的顶级分类下的二级分类、当前分类及子分类下文章列表
+        // -- 顶级分类信息
+        $tops           =   $this->categorySubA();
+        // -- 当前分类的顶级分类
+        $currentTop     =   Ancestor( $this->categories(), $uuid )['uuid'];
+        // -- 当前分类的顶级分类下的二级分类
+        $subA           =   $this->categorySubA($currentTop);
+        // -- 当前分类下所有下级分类列表
+        $currentSubs    =   Sorts( $this->categories(), true, $uuid );
+        // -- 当前分类下所有下级分类ids集
+        $currentSubIds  =   array_column( $currentSubs, 'uuid'  );
+        // -- 当前分类及子分类下文章列表
+        $data          =   Blog::status()->from('blog as b')
+            ->leftjoin('blog_category_relation as r','b.uuid','=','r.buuid')
+            ->select(...$this->allowFields)
+            ->whereIn('r.cuuid',array_merge( [$uuid], $currentSubIds ))
+            ->orderBy( 'b.publishedtype', 'desc' )->paginate(20);
 
         return view( 'main', [
-            'navs'      =>  $navs,
-            'nav2'      =>  $nav2,
-            'lists'     =>  $lists,
-            'current'   =>  $ancestor->uuid ?? $uuid,
-            'current2'  =>  $uuid,
+            'topnavs'           =>  $tops,          // 顶级分类
+            'subnavs'           =>  $subA,          // 顶级下 一级分类
+            'currentTop'        =>  $currentTop,    // 当前分类最高级分类uuid
+            'current'           =>  $uuid,          // 当前分类uuid
+            'data'              =>  $data,          // 携带分页信息的数据集
         ] );
     }
 
     /**
-     * @ 一级导航
+     * @ 下一级
      * @return array
      */
-    protected function categoryClassA ()
+    protected function categorySubA ($sign='')
     {
-        $calssA = [];
-        foreach ( $this->validCategory() as $item )
-            if( $item->pid == '' )  $calssA[] = $item;
-        return $calssA;
+        return array_filter( $this->categories(), function($item) use ($sign){
+            return $item['pid'] == $sign;
+        } );
     }
 
     /**
@@ -56,15 +64,15 @@ trait Category
      */
     protected function SubCategory ($uuid)
     {
-        return Sorts( $this->validCategory(), true, $uuid );
+        return Sorts( $this->categories(), true, $uuid );
     }
 
     /**
      * @ 获取合法的分类信息
      * @return mixed
      */
-    protected function validCategory ()
+    protected function categories ()
     {
-        return Model::where('status',1)->select(...['uuid','name','pid'])->get();
+        return $this->categories ?: ($this->categories=Model::status()->select(...['uuid','name','pid'])->get()->toArray());
     }
 }

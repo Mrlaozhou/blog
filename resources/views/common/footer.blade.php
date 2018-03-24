@@ -1,4 +1,4 @@
-<script src="http://m.xiaoying.net/Public/Common/js/jquery-1.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script>
     +function ($) {
         'use strict';

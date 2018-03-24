@@ -6,7 +6,7 @@
 <body id="body" class="home">
 <div id="warp">
     {{-- 导航 --}}
-    @include('common.nav')
+    @include('common.topnav')
 
     {{-- 页面主体 --}}
     <div class="container main-container">
@@ -14,14 +14,14 @@
         <div class="col-md-9 topics-index main-col">
             <div class="panel panel-default">
                 {{-- 二级分类 --}}
-                @isset( $nav2 )
-                    @include('common.nav2')
+                @isset( $subnavs )
+                    @include('common.subnav')
                 @endisset
                 <div class="infos panel-heading topics-show">
                     <h1 class="panel-title topic-title">{{ $info->title }}</h1>
                     <div class="meta inline-block" >
-                        <a href="" class="remove-padding-left"><i class="fa fa-folder text-md" aria-hidden="true"></i> 公告</a>⋅
-                        <a class="author" href="{{ route('user.info',[$user->uuid]) }}">{{ $user->username }}</a>⋅
+                        <a href="javascript:;" class="remove-padding-left"><i class="fa fa-folder text-md" aria-hidden="true"></i> 公告</a>⋅
+                        <a class="author" href="{{ route('user.info',[$user->uuid ?? '']) }}">{{ $user->nickname or '匿名' }}</a>⋅
                         于 <abbr title="" class="timeago">{{ date('Y-m-d',$info->publishedtime) }}</abbr>发布⋅
                         {{ $info->clicks }} 阅读
                     </div>

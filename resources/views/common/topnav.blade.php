@@ -29,12 +29,12 @@
 
         <div id="top-navbar-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                @foreach( $navs as $key=>$item )
+                @foreach( $topnavs as $key=>$item )
                     <li
-                    @if( isset($current) && $current==$item->uuid )
+                    @if( isset($currentTop) && $currentTop==$item['uuid'] )
                         class="active"
                     @endif
-                    ><a href="{{ route('category.lists',[$item->uuid]) }}">{{ $item->name }}</a></li>
+                    ><a href="{{ route('category.lists',[$item['uuid']]) }}">{{ $item['name'] }}</a></li>
                 @endforeach
             </ul>
             <div class="navbar-right">
