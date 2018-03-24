@@ -48,6 +48,7 @@ class IndexController extends Controller
             'topnavs'       =>  $tops,
             'info'          =>  $info,
             'user'          =>  $info->auther,
+            'title'         =>  $info->title,
         ]);
     }
 }
