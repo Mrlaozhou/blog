@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class MainBase extends Model
 {
     //
+    protected $connection           =   'mysql';
     protected $primaryKey           =   'uuid';
     protected $keyType              =   'string';
     protected $perPage              =   15;

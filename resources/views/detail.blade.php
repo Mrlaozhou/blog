@@ -21,7 +21,7 @@
                     <h1 class="panel-title topic-title">{{ $info->title }}</h1>
                     <div class="meta inline-block" >
                         <a href="javascript:;" class="remove-padding-left"><i class="fa fa-folder text-md" aria-hidden="true"></i> 公告</a>⋅
-                        <a class="author" href="{{ route('user.info',[$user->uuid ?? '']) }}">{{ $user->nickname or '匿名' }}</a>⋅
+                        <a class="author" href="{{ route('user.profile',[$user->uuid ?? '']) }}">{{ $user->nickname or '匿名' }}</a>⋅
                         于 <abbr title="" class="timeago">{{ date('Y-m-d',$info->publishedtime) }}</abbr>发布⋅
                         {{ $info->clicks }} 阅读
                     </div>
