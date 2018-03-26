@@ -35,7 +35,7 @@ trait Category
             ->leftjoin('blog_category_relation as r','b.uuid','=','r.buuid')
             ->select(...$this->allowFields)
             ->whereIn('r.cuuid',array_merge( [$uuid], $currentSubIds ))
-            ->orderBy( 'b.publishedtype', 'desc' )->paginate(20);
+            ->orderBy( 'b.publishedtype', 'desc' )->distinct()->paginate(20);
 
         return view( 'main', [
             'topnavs'           =>  $tops,          // 顶级分类
