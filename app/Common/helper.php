@@ -63,12 +63,12 @@ if( !function_exists('Ancestor') )
     {
         $ancestor   =   '';
         foreach ( $object as $key =>$item ){
-            if( $item->uuid != $pid )   continue;
+            if( $item['uuid'] != $pid )   continue;
 
-            if( $item->pid == '' ){
+            if( $item['pid'] == '' ){
                 return $ancestor=$item;
             };
-            $ancestor = Ancestor($object,$item->pid);
+            $ancestor = Ancestor($object,$item['pid']);
         }
 
         return $ancestor;

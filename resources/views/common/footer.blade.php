@@ -1,4 +1,6 @@
-<script src="http://m.xiaoying.net/Public/Common/js/jquery-1.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+{{--<script src="https://lccdn.phphub.org//assets/js/c569e0e2e66776cdf50b-scripts.js"></script>--}}
+
 <script>
     +function ($) {
         'use strict';

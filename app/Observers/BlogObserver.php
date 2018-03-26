@@ -12,6 +12,6 @@ class BlogObserver
     public function retrieved (Blog $blog)
     {
         // 详情访问 clicks自增 1
-//        $blog instanceof Blog && $blog->increment('clicks');
+        request()->route()->getName()=='blog.detail' && $blog->increment('clicks');
     }
 }

@@ -13,4 +13,14 @@ class Category extends MainBase
     {
         return $query->where( 'status', $status );
     }
+
+    public function blogs ()
+    {
+        return $this->belongsToMany(
+            Blog::class,
+            'blog_category_relation',
+            'cuuid',
+            'buuid'
+        );
+    }
 }

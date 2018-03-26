@@ -6,21 +6,21 @@
 
     <div id="warp">
         {{-- 导航 --}}
-        @include('common.nav')
+        @include('common.topnav')
         {{-- 页面主体 --}}
         <div class="container main-container">
             {{-- left --}}
             <div class="col-md-9 topics-index main-col">
                 <div class="panel panel-default">
                     {{-- 二级分类 --}}
-                    @isset( $nav2 )
-                        @include('common.nav2')
+                    @isset( $subnavs )
+                        @include('common.subnav')
                     @endisset
                     <div class="jscroll">
                         <div class="panel-body remove-padding-horizontal">
                             {{-- 文章列表 --}}
                             <ul class="list-group row topic-list">
-                                @foreach( $lists as $item )
+                                @foreach( $data as $item )
                                 <li class="list-group-item ">
                                     <a class="reply_count_area hidden-xs pull-right" href="{{ route('blog.detail',[$item->uuid]) }}">
                                         <div class="count_set">
@@ -34,7 +34,7 @@
                                         </div>
                                     </a>
                                     <div class="avatar pull-left">
-                                        <a href="{{ route('user.info',[$item->createdby]) }}" title="发布者">
+                                        <a href="{{ route('user.profile',[$item->createdby]) }}" title="发布者">
                                             <img class="media-object img-thumbnail avatar avatar-middle" alt=""
                                                  src="{{ $item->cover != '' ? $item->cover : '/images/timg.jpg' }}"/>
                                         </a>
@@ -66,7 +66,7 @@
 
                         <div class="panel-footer text-right remove-padding-horizontal pager-footer">
                             <!-- Pager -->
-                            {{ $lists->links() }}
+                            {{ $data->links() }}
 
                         </div>
                     </div>
